@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MontaJá - Encontre Montadores de Móveis de Confiança</title>
+    <meta name="description" content="Conecte-se diretamente aos melhores montadores de móveis da sua região. Orçamento rápido pelo WhatsApp sem taxas intermediárias.">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        },
+                        accent: {
+                            500: '#f97316',
+                            600: '#ea580c',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Estilos Customizados -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- ==========================================================================
+         CABEÇALHO (HEADER)
+         ========================================================================== -->
+    <header class="sticky top-0 z-40 header-glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Title -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 bg-gradient-to-tr from-brand-700 to-brand-500 rounded-xl flex items-center justify-center text-white shadow-md shadow-brand-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid fa-wrench text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-2xl font-extrabold text-slate-900 tracking-tight flex items-center gap-1.5">
+                        Monta<span class="text-accent-500">Já</span>
+                    </span>
+                    <span class="block text-[11px] font-medium text-slate-500 -mt-1 hidden sm:block">Montadores de Confiança</span>
+                </div>
+            </a>
+
+            <!-- CTA Header (Cadastre-se) -->
+            <div class="flex items-center gap-3">
+                <button id="btn-open-modal" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-xs sm:text-sm"></i>
+                    <span>É Montador? <span class="hidden sm:inline">Cadastre-se</span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- ==========================================================================
+             HERO SECTION COM BARRA DE BUSCA E FILTROS ATIVOS
+             ========================================================================== -->
+        <section class="relative bg-gradient-to-b from-brand-900 via-brand-900 to-slate-900 text-white pt-12 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+            <!-- Background Decorative Grid -->
+            <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]"></div>
+
+            <div class="relative max-w-4xl mx-auto text-center">
+                <!-- Tag Headline -->
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-xs font-semibold text-brand-100 mb-6">
+                    <span class="w-2 h-2 rounded-full bg-accent-500 animate-pulse"></span>
+                    Conexão Direta e Sem Taxas Intermediárias
+                </div>
+
+                <!-- Título Chamativo -->
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-tight mb-4">
+                    Precisa montar seus móveis <br class="hidden sm:block" />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-500 to-amber-300">sem dor de cabeça?</span>
+                </h1>
+
+                <!-- Subtítulo Explicativo -->
+                <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-10 font-normal leading-relaxed">
+                    Encontre os profissionais de montagem mais recomendados do seu bairro. Escolha, avalie e negocie diretamente no WhatsApp!
+                </p>
+
+                <!-- BARRA DE BUSCA & FILTRO (Caixa Flutuante) -->
+                <div class="bg-white p-4 sm:p-5 rounded-2xl shadow-2xl border border-slate-100 text-slate-800 text-left max-w-3xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                        
+                        <!-- Campo 1: Busca Bairro / Cidade -->
+                        <div class="md:col-span-5 relative">
+                            <label for="search-location" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">Onde você precisa?</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-location-dot"></i>
+                                </span>
+                                <input type="text" id="search-location" placeholder="Ex: Moema, Tatuapé, Centro..." 
+                                    class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-slate-800 font-medium">
+                            </div>
+                        </div>
+
+                        <!-- Campo 2: Drop-down Tipo de Serviço -->
+                        <div class="md:col-span-4 relative">
+                            <label for="filter-category" class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1">O que vai montar?</label>
+                            <div class="relative">
+                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-couch"></i>
+                                </span>
+                                <select id="filter-category" class="w-full pl-10 pr-8 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all text-slate-800 font-medium appearance-none cursor-pointer">
+                                    <option value="">Todas as Especialidades</option>
+                                    <option value="Guarda-Roupas">Guarda-Roupas</option>
+                                    <option value="Cozinhas Planejadas">Cozinhas Planejadas</option>
+                                    <option value="Móveis de Escritório">Móveis de Escritório</option>
+                                    <option value="Painéis de TV">Painéis de TV & Racks</option>
+                                    <option value="Reparos Gerais">Reparos & Remontagem</option>
+                                </select>
+                                <span class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400">
+                                    <i class="fa-solid fa-chevron-down text-xs"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Botão de Ação do Filtro -->
+                        <div class="md:col-span-3 flex items-end gap-2 pt-2 md:pt-5">
+                            <button id="btn-search" class="flex-1 bg-accent-500 hover:bg-accent-600 text-white font-bold py-2.5 px-4 rounded-xl text-sm transition-all shadow-md shadow-accent-500/20 flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                                <span>Buscar</span>
+                            </button>
+                            <button id="btn-clear" title="Limpar Filtros" class="p-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl text-sm transition-all" aria-label="Limpar Filtros">
+                                <i class="fa-solid fa-rotate-left"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SEÇÃO DE LISTAGEM DOS CARDS DE PROFISSIONAIS
+             ========================================================================== -->
+        <section id="profissionais" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <!-- Cabeçalho da Listagem -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-4 border-b border-slate-200">
+                <div>
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Montadores Disponíveis</h2>
+                    <p class="text-sm text-slate-500 mt-1">Profissionais autônomos verificados e avaliados por clientes</p>
+                </div>
+                <div class="flex items-center gap-2 sm:gap-3 self-start sm:self-auto flex-wrap">
+                    <button id="btn-toggle-favorites" onclick="toggleFavoritesFilter()" class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold bg-white text-slate-700 border border-slate-200 hover:border-rose-300 hover:text-rose-600 shadow-2xs transition-all cursor-pointer">
+                        <i id="fav-filter-icon" class="fa-regular fa-heart text-rose-500 text-sm"></i>
+                        <span>Meus Favoritos</span>
+                        <span id="favorites-badge" class="bg-rose-500 text-white rounded-full px-1.5 py-0.2 text-[10px] font-bold">0</span>
+                    </button>
+                    <span id="assemblers-count" class="inline-flex items-center px-3 py-1.5 rounded-xl text-xs font-bold bg-brand-50 text-brand-700 border border-brand-100">
+                        Carregando...
+                    </span>
+                </div>
+            </div>
+
+            <!-- GRID DE CARDS (Injetados via script.js) -->
+            <div id="assemblers-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Cards renderizados dinamicamente pelo JavaScript -->
+            </div>
+
+            <!-- ESTADO VAZIO (Exibido se nenhum filtro corresponder) -->
+            <div id="empty-state" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-dashed border-slate-300 max-w-lg mx-auto">
+                <div class="w-16 h-16 bg-slate-100 text-slate-400 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+                    <i class="fa-solid fa-user-slash"></i>
+                </div>
+                <h3 class="text-lg font-bold text-slate-900 mb-1">Nenhum montador encontrado</h3>
+                <p class="text-sm text-slate-500 mb-6">Tente buscar por outro bairro ou limpe os filtros para ver todos os profissionais da região.</p>
+                <button onclick="clearFilters()" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition-all inline-flex items-center gap-2">
+                    <i class="fa-solid fa-rotate-left"></i>
+                    Ver Todos os Montadores
+                </button>
+            </div>
+        </section>
+
+        <!-- ==========================================================================
+             SEÇÃO COMO FUNCIONA (3 PASSOS)
+             ========================================================================== -->
+        <section class="py-16 bg-white border-y border-slate-200/80 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900">Como funciona o MontaJá</h2>
+                    <p class="text-sm text-slate-500 mt-2">Sem cadastro burocrático para clientes. Rápido, transparente e direto.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 relative">
+                    <!-- Passo 1 -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 text-center relative group hover:bg-white hover:shadow-lg transition-all">
+                        <div class="w-14 h-14 bg-brand-100 text-brand-600 rounded-2xl flex items-center justify-center text-2xl font-black mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            1
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Busque sua região</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Digite seu bairro ou cidade na barra de busca e escolha o tipo de móvel que precisa montar.
+                        </p>
+                    </div>
+
+                    <!-- Passo 2 -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 text-center relative group hover:bg-white hover:shadow-lg transition-all">
+                        <div class="w-14 h-14 bg-accent-500/10 text-accent-600 rounded-2xl flex items-center justify-center text-2xl font-black mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            2
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Escolha o profissional</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Analise perfis com avaliações em estrelas, fotos de projetos anteriores e regiões de atendimento.
+                        </p>
+                    </div>
+
+                    <!-- Passo 3 -->
+                    <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 text-center relative group hover:bg-white hover:shadow-lg transition-all">
+                        <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center text-2xl font-black mx-auto mb-6 group-hover:scale-110 transition-transform">
+                            3
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 mb-2">Combine no WhatsApp</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Clique no botão e envie a mensagem direto no WhatsApp do montador sem pagar nenhuma comissão à plataforma.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ==========================================================================
+         MODAL DE CADASTRO DE MONTADORES
+         ========================================================================== -->
+    <div id="modal-cadastro" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop modal-hidden" aria-hidden="true" role="dialog">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-2xl max-h-[90vh] overflow-y-auto modal-content p-6 sm:p-8">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-900">Cadastre-se como Montador</h3>
+                        <p class="text-xs text-slate-500">Receba solicitações de clientes direto no seu WhatsApp</p>
+                    </div>
+                </div>
+                <button id="btn-close-modal" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg transition-colors" aria-label="Fechar Modal">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="register-form" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Nome Completo -->
+                    <div>
+                        <label for="register-name" class="block text-xs font-bold text-slate-700 uppercase mb-1">Nome Completo *</label>
+                        <input type="text" id="register-name" required placeholder="Ex: João da Silva"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    </div>
+
+                    <!-- WhatsApp com DDD -->
+                    <div>
+                        <label for="register-phone" class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp (com DDD) *</label>
+                        <input type="tel" id="register-phone" required placeholder="Ex: 11999998888"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <!-- Cidade Principal -->
+                    <div>
+                        <label for="register-city" class="block text-xs font-bold text-slate-700 uppercase mb-1">Cidade Principal *</label>
+                        <input type="text" id="register-city" required placeholder="Ex: São Paulo"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    </div>
+
+                    <!-- Foto de Perfil (URL) -->
+                    <div>
+                        <label for="register-photo" class="block text-xs font-bold text-slate-700 uppercase mb-1">URL da Foto de Perfil</label>
+                        <input type="url" id="register-photo" placeholder="https://exemplo.com/sua-foto.jpg"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <!-- Trabalhos Concluídos -->
+                    <div>
+                        <label for="register-completed-jobs" class="block text-xs font-bold text-slate-700 uppercase mb-1">Trabalhos Concluídos</label>
+                        <input type="number" id="register-completed-jobs" min="1" placeholder="Ex: 150" value="1"
+                            class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium">
+                    </div>
+
+                    <!-- Tempo Médio de Resposta -->
+                    <div>
+                        <label for="register-response-time" class="block text-xs font-bold text-slate-700 uppercase mb-1">Tempo de Resposta *</label>
+                        <select id="register-response-time" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium">
+                            <option value="Responde em ~15 min">Responde em ~15 min</option>
+                            <option value="Responde em ~30 min">Responde em ~30 min</option>
+                            <option value="Responde em ~1 hora">Responde em ~1 hora</option>
+                            <option value="Responde em até 2 horas">Responde em até 2 horas</option>
+                        </select>
+                    </div>
+
+                    <!-- Dias de Garantia -->
+                    <div>
+                        <label for="register-guarantee" class="block text-xs font-bold text-slate-700 uppercase mb-1">Garantia Oferecida *</label>
+                        <select id="register-guarantee" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all font-medium">
+                            <option value="30">Garantia de 30 dias</option>
+                            <option value="7">Garantia de 7 dias</option>
+                            <option value="15">Garantia de 15 dias</option>
+                            <option value="60">Garantia de 60 dias</option>
+                            <option value="90">Garantia de 90 dias</option>
+                            <option value="0">Sem garantia estendida</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Bairros Atendidos -->
+                <div>
+                    <label for="register-neighborhoods" class="block text-xs font-bold text-slate-700 uppercase mb-1">Bairros e Regiões de Atendimento *</label>
+                    <input type="text" id="register-neighborhoods" required placeholder="Ex: Moema, Pinheiros, Jardins e região"
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                </div>
+
+                <!-- Especialidades (Checkboxes) -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-2">Especialidades Principal (Selecione pelo menos 1) *</label>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                        <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer text-xs font-medium hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" name="register-specialties" value="Guarda-Roupas" class="rounded text-brand-600 focus:ring-brand-500">
+                            <span>Guarda-Roupas</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer text-xs font-medium hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" name="register-specialties" value="Cozinhas Planejadas" class="rounded text-brand-600 focus:ring-brand-500">
+                            <span>Cozinhas</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer text-xs font-medium hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" name="register-specialties" value="Móveis de Escritório" class="rounded text-brand-600 focus:ring-brand-500">
+                            <span>Escritório</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer text-xs font-medium hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" name="register-specialties" value="Painéis de TV" class="rounded text-brand-600 focus:ring-brand-500">
+                            <span>Painéis & Racks</span>
+                        </label>
+                        <label class="flex items-center gap-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 cursor-pointer text-xs font-medium hover:bg-slate-100 transition-colors">
+                            <input type="checkbox" name="register-specialties" value="Reparos Gerais" class="rounded text-brand-600 focus:ring-brand-500">
+                            <span>Reparos Gerais</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Mini Bio / Resumo -->
+                <div>
+                    <label for="register-bio" class="block text-xs font-bold text-slate-700 uppercase mb-1">Apresentação / Experiência</label>
+                    <textarea id="register-bio" rows="3" placeholder="Conte brevemente sobre seus anos de experiência, ferramentas ou diferenciais..."
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all"></textarea>
+                </div>
+
+                <!-- Galeria Fotos de Trabalhos Anteriores -->
+                <div>
+                    <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Fotos de Trabalhos Anteriores / Portfólio (até 3 URLs)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <input type="url" id="register-gallery-1" placeholder="URL Foto 1 (Antes/Depois)"
+                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <input type="url" id="register-gallery-2" placeholder="URL Foto 2"
+                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                        <input type="url" id="register-gallery-3" placeholder="URL Foto 3"
+                            class="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
+                    </div>
+                </div>
+
+                <!-- Footer do Modal (Botoes) -->
+                <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100">
+                    <button type="button" onclick="closeModal()" class="px-5 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center gap-2">
+                        <i class="fa-solid fa-check"></i>
+                        Concluir Cadastro
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL LIGHTBOX PARA VISUALIZAR FOTO AMPLIADA DA GALERIA
+         ========================================================================== -->
+    <div id="modal-lightbox" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop modal-hidden" aria-hidden="true" role="dialog">
+        <div class="relative bg-slate-900/90 rounded-2xl overflow-hidden max-w-3xl w-full max-h-[85vh] flex flex-col items-center justify-center p-2">
+            <button id="btn-close-lightbox" onclick="closeLightbox()" class="absolute top-3 right-3 text-white bg-slate-800/80 hover:bg-slate-700 w-9 h-9 rounded-full flex items-center justify-center transition-colors z-10" aria-label="Fechar Imagem">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <img id="lightbox-img" src="" alt="Trabalho de Montagem" class="max-h-[75vh] w-auto object-contain rounded-lg shadow-2xl">
+            <p id="lightbox-caption" class="text-xs text-slate-300 mt-2 font-medium text-center px-4 py-1 bg-slate-800/60 rounded-full"></p>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         MODAL DE ORÇAMENTO RÁPIDO (PRÉ-PEDIDO PARA WHATSAPP)
+         ========================================================================== -->
+    <div id="modal-order" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop modal-hidden" aria-hidden="true" role="dialog">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-lg overflow-hidden modal-content p-6 sm:p-7">
+            <!-- Modal Header -->
+            <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center font-bold text-lg">
+                        <i class="fa-brands fa-whatsapp"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-slate-900 leading-tight">Solicitar Orçamento no WhatsApp</h3>
+                        <p id="order-assembler-name" class="text-xs text-slate-500 font-medium">Com o profissional</p>
+                    </div>
+                </div>
+                <button id="btn-close-order-modal" onclick="closeOrderModal()" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg transition-colors" aria-label="Fechar Modal">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="order-form" class="space-y-4">
+                <input type="hidden" id="order-assembler-id">
+
+                <!-- 1. Tipo de Móvel -->
+                <div>
+                    <label for="order-furniture-type" class="block text-xs font-bold text-slate-700 uppercase mb-1">1. Qual tipo de móvel vai montar? *</label>
+                    <select id="order-furniture-type" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-medium text-slate-800">
+                        <option value="Guarda-Roupa / Armário">Guarda-Roupa / Armário</option>
+                        <option value="Cozinha Planejada / Armários">Cozinha Planejada / Armários</option>
+                        <option value="Painel de TV / Rack / Estante">Painel de TV / Rack / Estante</option>
+                        <option value="Móveis de Escritório / Mesa / Cadeira">Móveis de Escritório / Mesa / Cadeira</option>
+                        <option value="Cama / Beliche / Cabeceira">Cama / Beliche / Cabeceira</option>
+                        <option value="Outros / Vários Móveis">Outros / Vários Móveis</option>
+                    </select>
+                </div>
+
+                <!-- 2. Quantidade de Peças -->
+                <div>
+                    <label for="order-quantity" class="block text-xs font-bold text-slate-700 uppercase mb-1">2. Quantidade aproximada de peças/volumes *</label>
+                    <select id="order-quantity" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-medium text-slate-800">
+                        <option value="1 móvel / peça única">1 móvel / peça única</option>
+                        <option value="2 a 3 móveis">2 a 3 móveis</option>
+                        <option value="4 a 6 móveis">4 a 6 móveis</option>
+                        <option value="Ambiente completo (7+ peças)">Ambiente completo (7+ peças)</option>
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- 3. Condição do Móvel / Manual -->
+                    <div>
+                        <label for="order-condition" class="block text-xs font-bold text-slate-700 uppercase mb-1">3. Estado do móvel? *</label>
+                        <select id="order-condition" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-medium text-slate-800">
+                            <option value="Novo na caixa (com manual)">Novo na caixa (com manual)</option>
+                            <option value="Desmontagem + Remontagem">Desmontagem + Remontagem</option>
+                            <option value="Móvel usado / Sem manual">Móvel usado / Sem manual</option>
+                        </select>
+                    </div>
+
+                    <!-- 4. Urgência -->
+                    <div>
+                        <label for="order-urgency" class="block text-xs font-bold text-slate-700 uppercase mb-1">4. Qual o prazo desejado? *</label>
+                        <select id="order-urgency" required class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-medium text-slate-800">
+                            <option value="Urgente (Hoje / Amanhã)">Urgente (Hoje / Amanhã)</option>
+                            <option value="Nesta semana">Nesta semana</option>
+                            <option value="Sem pressa (Flexível)">Sem pressa (Flexível)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- 5. Bairro do Cliente -->
+                <div>
+                    <label for="order-location" class="block text-xs font-bold text-slate-700 uppercase mb-1">5. Seu Bairro / Cidade *</label>
+                    <input type="text" id="order-location" required placeholder="Ex: Moema, São Paulo"
+                        class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:bg-white transition-all font-medium text-slate-800">
+                </div>
+
+                <!-- Footer do Modal (Botoes) -->
+                <div class="pt-4 flex items-center justify-end gap-3 border-t border-slate-100 mt-2">
+                    <button type="button" onclick="closeOrderModal()" class="px-4 py-2.5 rounded-xl text-sm font-semibold text-slate-600 hover:bg-slate-100 transition-colors">
+                        Cancelar
+                    </button>
+                    <button type="submit" class="whatsapp-btn text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i>
+                        Enviar Pedido no WhatsApp
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ==========================================================================
+         RODAPÉ (FOOTER)
+         ========================================================================== -->
+    <footer class="bg-slate-900 text-slate-400 py-12 px-4 sm:px-6 lg:px-8 border-t border-slate-800">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-8 mb-8 pb-8 border-b border-slate-800">
+            <!-- Coluna 1: Branding -->
+            <div class="md:col-span-5">
+                <a href="#" class="flex items-center gap-2.5 mb-3">
+                    <div class="w-8 h-8 bg-brand-600 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+                        <i class="fa-solid fa-wrench"></i>
+                    </div>
+                    <span class="text-xl font-extrabold text-white tracking-tight">
+                        Monta<span class="text-accent-500">Já</span>
+                    </span>
+                </a>
+                <p class="text-xs text-slate-400 leading-relaxed max-w-sm">
+                    A plataforma que facilita o contato direto entre clientes e os melhores montadores de móveis autônomos do Brasil.
+                </p>
+            </div>
+
+            <!-- Coluna 2: Links Rápidos -->
+            <div class="md:col-span-3">
+                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3">Navegação</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#profissionais" class="hover:text-white transition-colors">Buscar Montadores</a></li>
+                    <li><a href="#" onclick="openModal(); return false;" class="hover:text-white transition-colors">Cadastrar como Montador</a></li>
+                </ul>
+            </div>
+
+            <!-- Coluna 3: Aviso de Responsabilidade -->
+            <div class="md:col-span-4">
+                <h4 class="text-xs font-bold text-slate-200 uppercase tracking-wider mb-3">Aviso Importante</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    O <strong>MontaJá</strong> é uma vitrine de aproximação direta. Não intermediamos pagamentos nem cobramos comissões sobre os serviços prestados. A negociação é feita 100% via WhatsApp diretamente com o profissional.
+                </p>
+            </div>
+        </div>
+
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+            <p>&copy; 2026 MontaJá. Todos os direitos reservados.</p>
+            <div class="flex items-center gap-4">
+                <span>Desenvolvido com <i class="fa-solid fa-heart text-red-500"></i> para montadores autônomos</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript da Aplicação -->
+    <script src="script.js"></script>
+</body>
+</html>
