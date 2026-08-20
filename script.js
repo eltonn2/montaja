@@ -321,11 +321,24 @@ function setupEventListeners() {
     const modalCadastro = document.getElementById('modal-cadastro');
     const registerForm = document.getElementById('register-form');
 
+    const btnOpenStatusModal = document.getElementById('btn-open-status-modal');
+    const btnCloseStatusModal = document.getElementById('btn-close-status-modal');
+    const modalStatus = document.getElementById('modal-status');
+    const statusForm = document.getElementById('status-form');
+
     if (btnOpenModal) btnOpenModal.addEventListener('click', openModal);
     if (btnCloseModal) btnCloseModal.addEventListener('click', closeModal);
     if (modalCadastro) {
         modalCadastro.addEventListener('click', (e) => {
             if (e.target === modalCadastro) closeModal();
+        });
+    }
+
+    if (btnOpenStatusModal) btnOpenStatusModal.addEventListener('click', openStatusModal);
+    if (btnCloseStatusModal) btnCloseStatusModal.addEventListener('click', closeStatusModal);
+    if (modalStatus) {
+        modalStatus.addEventListener('click', (e) => {
+            if (e.target === modalStatus) closeStatusModal();
         });
     }
 
@@ -346,6 +359,7 @@ function setupEventListeners() {
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             if (isModalOpen()) closeModal();
+            if (isStatusModalOpen()) closeStatusModal();
             if (isOrderModalOpen()) closeOrderModal();
             closeLightbox();
         }
@@ -353,6 +367,9 @@ function setupEventListeners() {
 
     if (registerForm) {
         registerForm.addEventListener('submit', handleRegisterSubmit);
+    }
+    if (statusForm) {
+        statusForm.addEventListener('submit', handleStatusSubmit);
     }
 
     const orderForm = document.getElementById('order-form');
@@ -677,6 +694,80 @@ function closeModal() {
 function isModalOpen() {
     const modal = document.getElementById('modal-cadastro');
     return modal && modal.classList.contains('modal-visible');
+}
+
+function openStatusModal() {
+    const modal = document.getElementById('modal-status');
+    if (modal) {
+        modal.classList.remove('modal-hidden');
+        modal.classList.add('modal-visible');
+        document.body.style.overflow = 'hidden';
+
+        setTimeout(() => {
+            const statusInput = document.getElementById('status-whatsapp');
+            if (statusInput) statusInput.focus();
+        }, 100);
+    }
+}
+
+function closeStatusModal() {
+    const modal = document.getElementById('modal-status');
+    if (modal) {
+        modal.classList.remove('modal-visible');
+        modal.classList.add('modal-hidden');
+        document.body.style.overflow = '';
+    }
+}
+
+function isStatusModalOpen() {
+    const modal = document.getElementById('modal-status');
+    return modal && modal.classList.contains('modal-visible');
+}
+
+async function handleStatusSubmit(e) {
+    e.preventDefault();
+
+    const whatsappInput = document.getElementById('status-whatsapp');
+    const phone = whatsappInput ? whatsappInput.value.trim() : '';
+    const statusResult = document.getElementById('status-result');
+    const statusContent = document.getElementById('status-result-content');
+
+    if (!phone) {
+        showToast('Informe o WhatsApp do montador.', 'warning');
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/montadores/status?whatsapp=${encodeURIComponent(phone)}`);
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(data.error || 'Não foi possível consultar o status.');
+        }
+
+        const statusText = data.statusLabel || 'Status indisponível';
+        const endsAt = data.endsAt ? new Date(data.endsAt).toLocaleDateString('pt-BR') : '—';
+        const daysLeft = data.daysLeft !== undefined ? `${data.daysLeft} dia(s)` : '—';
+
+        if (statusResult && statusContent) {
+            statusResult.classList.remove('hidden');
+            statusContent.innerHTML = `
+                <p><strong>Nome:</strong> ${data.name || 'Não informado'}</p>
+                <p><strong>Status:</strong> <span class="font-semibold text-slate-800">${statusText}</span></p>
+                <p><strong>Ativo:</strong> ${data.searchable ? 'Sim' : 'Não'}</p>
+                <p><strong>Dias restantes:</strong> ${daysLeft}</p>
+                <p><strong>Válido até:</strong> ${endsAt}</p>
+            `;
+        }
+
+        showToast('Consulta de status concluída!', 'success');
+    } catch (error) {
+        if (statusResult && statusContent) {
+            statusResult.classList.remove('hidden');
+            statusContent.innerHTML = `<p class="text-rose-600 font-medium">${error.message}</p>`;
+        }
+        showToast(error.message, 'warning');
+    }
 }
 
 // 9. ENVIO DO FORMULÁRIO (GRAVA NO BANCO DE DADOS SE CONECTADO)

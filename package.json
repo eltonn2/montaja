@@ -11,13 +11,17 @@
     "montaja",
     "sqlite",
     "express",
-    "rest-api"
+    "rest-api",
+    "mercadopago"
   ],
   "author": "MontaJá Team",
   "license": "ISC",
   "dependencies": {
+    "canvas": "^3.2.3",
     "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "mercadopago": "^2.3.0",
     "sqlite3": "^5.1.7"
   }
 }

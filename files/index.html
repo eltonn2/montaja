@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MontaJá - Encontre Montadores de Móveis de Confiança</title>
     <meta name="description" content="Conecte-se diretamente aos melhores montadores de móveis da sua região. Orçamento rápido pelo WhatsApp sem taxas intermediárias.">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <meta name="theme-color" content="#2563eb">
     
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -60,8 +68,8 @@
             <!-- CTA Header (Cadastre-se) -->
             <div class="flex items-center gap-3">
                 <button id="btn-open-status-modal" class="hidden sm:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-brand-600 transition-colors">
-                    <i class="fa-solid fa-circle-check text-[11px]"></i>
-                    <span>Status do cadastro</span>
+                    <i class="fa-regular fa-clock"></i>
+                    <span>Já sou montador, ver meu status</span>
                 </button>
                 <button id="btn-open-modal" class="bg-brand-600 hover:bg-brand-700 text-white font-semibold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm shadow-sm hover:shadow-md transition-all flex items-center gap-2">
                     <i class="fa-solid fa-user-plus text-xs sm:text-sm"></i>
@@ -259,6 +267,16 @@
                 </button>
             </div>
 
+            <!-- Aviso do Modelo de Assinatura -->
+            <div class="mb-5 p-3.5 bg-brand-50 border border-brand-100 rounded-xl flex items-start gap-2.5">
+                <i class="fa-solid fa-gift text-brand-600 mt-0.5"></i>
+                <p class="text-xs text-slate-700 leading-relaxed">
+                    <span class="font-bold">30 dias grátis</span> para testar e receber clientes.
+                    Depois, seu perfil continua visível na busca por apenas
+                    <span class="font-bold">R$ 29,90/mês</span> — cancele quando quiser.
+                </p>
+            </div>
+
             <!-- Modal Form -->
             <form id="register-form" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -395,18 +413,18 @@
     </div>
 
     <!-- ==========================================================================
-         MODAL DE STATUS DO CADASTRO / ASSINATURA
+         MODAL DE CONSULTA DE STATUS (TRIAL / ASSINATURA)
          ========================================================================== -->
     <div id="modal-status" class="fixed inset-0 z-50 flex items-center justify-center p-4 modal-backdrop modal-hidden" aria-hidden="true" role="dialog">
-        <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md modal-content p-6 sm:p-7">
+        <div class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-md modal-content p-6 sm:p-8">
             <div class="flex items-center justify-between pb-4 mb-5 border-b border-slate-100">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center font-bold text-lg">
-                        <i class="fa-solid fa-circle-check"></i>
+                    <div class="w-10 h-10 bg-brand-100 text-brand-600 rounded-xl flex items-center justify-center font-bold">
+                        <i class="fa-regular fa-clock"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-bold text-slate-900 leading-tight">Consultar Status</h3>
-                        <p class="text-xs text-slate-500 font-medium">Acompanhe sua assinatura e período de teste</p>
+                        <h3 class="text-lg font-bold text-slate-900">Meu Status na Plataforma</h3>
+                        <p class="text-xs text-slate-500">Consulte seu período de teste ou assinatura</p>
                     </div>
                 </div>
                 <button id="btn-close-status-modal" class="text-slate-400 hover:text-slate-600 p-2 rounded-lg transition-colors" aria-label="Fechar Modal">
@@ -414,26 +432,19 @@
                 </button>
             </div>
 
-            <form id="status-form" class="space-y-4">
+            <form id="status-form" class="space-y-3">
                 <div>
-                    <label for="status-whatsapp" class="block text-xs font-bold text-slate-700 uppercase mb-1">WhatsApp cadastrado</label>
-                    <input type="tel" id="status-whatsapp" required placeholder="Ex: 11999998888"
+                    <label for="status-phone" class="block text-xs font-bold text-slate-700 uppercase mb-1">Seu WhatsApp Cadastrado</label>
+                    <input type="tel" id="status-phone" required placeholder="Ex: 11999998888"
                         class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 focus:bg-white transition-all">
                 </div>
-
-                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold px-6 py-2.5 rounded-xl text-sm transition-all shadow-md flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    Consultar status
+                <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-2.5 rounded-xl text-sm transition-all shadow-md">
+                    Consultar
                 </button>
-
-                <div id="status-result" class="hidden rounded-2xl border border-slate-200 bg-slate-50 p-4 text-sm text-slate-600">
-                    <div class="flex items-center gap-2 mb-2">
-                        <i class="fa-solid fa-info-circle text-brand-600"></i>
-                        <span class="font-bold text-slate-800">Resultado</span>
-                    </div>
-                    <div id="status-result-content" class="space-y-1"></div>
-                </div>
             </form>
+
+            <!-- Resultado da consulta -->
+            <div id="status-result" class="mt-4 hidden"></div>
         </div>
     </div>
 
